@@ -27,11 +27,25 @@ app.service('WeatherService', function($http){
 });
 
 app.service('DatabaseService', function($http) {
+  this.registerUser = function(newUser) {
+    $http.post('/register', newUser)
+    .success(function(data) {
+      console.log(data);
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+  };
   this.storeForecast = function() {
-    return $http.get('/store-forecast');
+    return $http.post('/store-forecast');
   };
 });
-app.controller('MainCtrl', function($scope, WeatherService, DatabaseService) {
+app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
+  $scope.registerUser = function() {
+    console.log($scope.newUser);
+    DatabaseService.registerUser($scope.newUser);
+    $scope.newUser = '';
+  };
   $scope.submitSearch = function() {
     WeatherService.forecast($scope.search)
     .success(function(data){

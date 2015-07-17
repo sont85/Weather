@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router();
@@ -10,9 +11,20 @@ mongoose.connect('mongodb://localhost/weather');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Weather App' });
 });
-router.get('/store-forecast', function(req, res){
-  
+router.post('/register', function(req, res){
+  console.log(req.body);
+  Weather.find({}, function(err, response) {
+    var newUser = {
+      email: req.body.email,
+      password: req.body.password
+    };
+    newUser.save();
+    res.json(newUser);
+  });
+});
+router.post('/store-forecast', function(req, res){
 
 });
+
 
 module.exports = router;
