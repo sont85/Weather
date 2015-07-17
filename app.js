@@ -4,8 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var passport = require('passport');
+var session = require('express-session');
+var mongoose = require('mongoose');
 var app = express();
+
+mongoose.connect('mongodb://localhost/weather');
 
 
 // view engine setup
@@ -18,6 +22,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(session({ secret: 'revengeofthenerds' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+require('./config/passport');
+require('./routes/passport.js');
+
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
