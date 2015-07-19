@@ -1,19 +1,20 @@
 'use strict';
 module.exports = function(app, passport) {
 
-  app.get('/', isLoggedIn, function(req, res, next) {
-    res.render('index');
+  app.get('/', function(req, res, next) {
+    res.render('index', { title: 'Weather App' });
   });
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/',
-    failureRedirect : '/search'
-  }));
+  app.post('/login', passport.authenticate('local-login'), function(req, res){
+    if (req.user) {
+      res.json(req.user);
+    }
+  res.status(404);
+});
 
-  app.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/',
-    failureRedirect : '/'
-  }));
+  app.post('/register', passport.authenticate('local-signup'), function(req, res) {
+    res.json(req.user);
+  });
 
   app.get('/logout', function(req, res) {
     req.logout();
@@ -21,9 +22,11 @@ module.exports = function(app, passport) {
   });
 };
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
+// function isLoggedIn(req, res, next) {
+//   console.log(req.user);
+//   if (req.isAuthenticated()) {
+//     console.log('authenticate');
+//     res.redirect('/#/search');
+//     return next();
+//   }
+// }
