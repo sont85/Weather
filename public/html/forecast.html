@@ -7,15 +7,16 @@
     </span>
   </div>
 </form>
-<h2 class="text-center">
-  10-Day Forecast</h2>
 <div class="row">
   <div ng-repeat='condition in conditionsData' class="col-xs-4 text-center heading">
-    <h3>{{condition.current_observation.display_location.city}} {{condition.current_observation.display_location.state}}</h3>
-    <h5>{{condition.current_observation.temperature_string}}</h5>
+    <h3>{{condition.current_observation.display_location.full}} {{condition.current_observation.display_location.zip}}</h2>
+    <h3>{{condition.current_observation.temperature_string}}</h3>
+    <img src="{{condition.current_observation.icon_url}}">
+    <h5>{{condition.current_observation.icon}}, Humidity: {{condition.current_observation.relative_humidity}}</h5>
     <h5>{{condition.current_observation.observation_time}}<h5>
   </div>
 </div>
+<h2 class="text-center">10-Day Forecast</h2>
 <div class="row">
   <div ng-repeat="zipCode in forecastsData" class="col-xs-4 text-center">
     <div ng-repeat="day in zipCode.forecast.simpleforecast.forecastday" class="day">
