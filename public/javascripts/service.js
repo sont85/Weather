@@ -39,7 +39,7 @@ app.service('DatabaseService', function($http, $state) {
     data.condition = condition;
     $http.post('/storeweather', data)
     .success(function(userData){
-      console.log("===============")
+      console.log("===============");
       return self.getWeather();
     });
   };
