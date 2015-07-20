@@ -9,8 +9,8 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var app = express();
 
-mongoose.connect('mongodb://localhost/weather');
-
+// mongoose.connect('mongodb://localhost/weather');
+mongoose.connect(process.env.MONGOLAB_URI);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(session({ secret: 'revengeofthenerds', saveUninitialized: true, resave: true })); // session secret
+app.use(session({ secret: 'true', saveUninitialized: true, resave: true })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
 
