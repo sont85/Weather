@@ -13,3 +13,10 @@ body {
 .heading {
   color: #444;
 }
+
+.padding{
+  padding-right: 38px;
+}
+.bottom-margin {
+  margin-bottom: 5px
+}

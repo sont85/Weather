@@ -1,5 +1,6 @@
-<button class='btn btn-primary btn-lg pull-right' data-toggle='modal' data-target='#registerModal'>Register</button>
-
+<div class="text-center">
+  <button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#registerModal'>Register</button>
+<div>
 <div class='modal fade' id='registerModal'>
   <div class='modal-dialog'>
     <div class='modal-content'>
@@ -28,10 +29,14 @@
   <div class='col-sm-6'>
     <h3>Log In</h3>
     <form ng-submit='loginUser()'>
-      <label>Email</label>
-      <input class='form-control' ng-model='login.email'>
-      <label>Password</label>
-      <input class='form-control' ng-model='login.password' type='password'>
+      <div class="input-group bottom-margin">
+        <div class="input-group-addon padding">Email</div>
+        <input class='form-control' ng-model='login.email'>
+      </div>
+      <div class="input-group">
+        <div class='input-group-addon'>Password</div>
+        <input class='form-control' ng-model='login.password' type='password'>
+      </div>
       <button type='submit' class="btn btn-primary">Log In</button>
     </form>
   </div>
