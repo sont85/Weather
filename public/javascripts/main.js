@@ -44,10 +44,11 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition)
         .then(function(user){
-          $scope.$evalAsync(function(){
-            $scope.forecastsData = user.forecast;
-            $scope.conditionsData = user.condition;
-          });
+          console.log('!!!!!', user);
+          // $scope.$evalAsync(function(){
+          //   $scope.forecastsData = user.forecast;
+          //   $scope.conditionsData = user.condition;
+          // });
         });
       })
       .catch(function(err){
