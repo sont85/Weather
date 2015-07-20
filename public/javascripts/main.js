@@ -46,7 +46,9 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
         .then(function(){
           DatabaseService.getWeather()
           .then(function(response){
-            console.log(response);
+            $scope.conditionsData = response.data.condition;
+            $scope.forecastsData = response.data.forecast;
+            $scope.evalAsync();
           });
         });
       })
