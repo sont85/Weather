@@ -44,7 +44,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition)
         .then(function(user){
-          $scope.$apply(function(){
+          $scope.$evalAsync(function(){
             $scope.forecastsData = user.forecast;
             $scope.conditionsData = user.condition;
           });
