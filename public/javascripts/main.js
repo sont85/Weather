@@ -30,6 +30,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
   .success(function(user){
     $scope.forecastsData = user.forecast;
     $scope.conditionsData = user.condition;
+    console.log(user)
   }).catch(function(err){
     console.log(err);
   });
