@@ -43,7 +43,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       WeatherService.condition($scope.search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition);
-        $state.reload();
+        // $state.reload();
       })
       .catch(function(err){
         console.log(err);
