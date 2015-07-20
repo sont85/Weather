@@ -28,9 +28,12 @@ app.controller('LoginCtrl', function($scope, DatabaseService, $state) {
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
   DatabaseService.getWeather()
   .success(function(user){
-    $scope.forecastsData = user.forecast;
-    $scope.conditionsData = user.condition;
-    console.log(user)
+    $scope.$apply(function(){
+      $scope.forecastsData = user.forecast;
+      $scope.conditionsData = user.condition;
+    });
+
+    console.log(user);
   }).catch(function(err){
     console.log(err);
   });
