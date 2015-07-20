@@ -43,14 +43,11 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       WeatherService.condition($scope.search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition)
-        .then(function(response){
-          console.log('!!!!', response);
-          // $scope.$apply(function(){
-          //   $scope.forecastsData = user.forecast;
-          //   $scope.conditionsData = user.condition;
-          // });
-        });
-
+        .then(function(user){
+          $scope.$apply(function(){
+            $scope.forecastsData = user.forecast;
+            $scope.conditionsData = user.condition;
+          });
       })
       .catch(function(err){
         console.log(err);
