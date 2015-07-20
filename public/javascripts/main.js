@@ -28,7 +28,7 @@ app.controller('LoginCtrl', function($scope, DatabaseService, $state) {
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
   DatabaseService.getWeather()
   .then(function(user){
-    $scope.$apply(function(){
+    $scope.$evalAsync(function(){
       $scope.forecastsData = user.forecast;
       $scope.conditionsData = user.condition;
     });
@@ -43,7 +43,15 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       WeatherService.condition($scope.search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition);
-        $state.reload();
+          DatabaseService.getWeather()
+          .then(function(user){
+            $scope.$evalAsync(function(){
+              $scope.forecastsData = user.forecast;
+              $scope.conditionsData = user.condition;
+            });
+          }).catch(function(err){
+            console.log(err);
+          });
       })
       .catch(function(err){
         console.log(err);
