@@ -41,7 +41,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
     WeatherService.forecast($scope.search)
     .success(function(forecast){
       console.log('wooopeeeee', forecast);
-      if (!forecast.response.error) {
+      if (forecast.response.error) {
         return;
       }
       WeatherService.condition($scope.search)
