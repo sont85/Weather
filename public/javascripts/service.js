@@ -13,6 +13,7 @@ app.service('WeatherService', function($http, Url){
   };
 });
 app.service('DatabaseService', function($http, $state) {
+  var self = this
   this.loginUser = function(loginUser) {
     $http.post('/login', loginUser)
     .success(function(response){
@@ -37,9 +38,10 @@ app.service('DatabaseService', function($http, $state) {
     data.forecast = forecast;
     data.condition = condition;
     $http.post('/storeweather', data)
-      .success(function(userData){
-        return DatabaseService.getWeather()
-      });
+    .success(function(userData){
+      console.log("===============")
+      return self.getWeather();
+    });
   };
   this.getWeather = function(forecastData) {
     return $http.get('/getweather');
