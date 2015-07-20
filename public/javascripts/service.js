@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('Weather');
 app.constant('Url', {
-  forecast: 'http://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/',
-  condition: 'http://api.wunderground.com/api/5ac2a3bc4dece267/conditions/q/'
+  forecast: 'https://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/',
+  condition: 'https://api.wunderground.com/api/5ac2a3bc4dece267/conditions/q/'
 });
 app.service('WeatherService', function($http, Url){
   this.forecast = function(search) {
