@@ -37,14 +37,11 @@ app.service('DatabaseService', function($http, $state) {
     var data = {};
     data.forecast = forecast;
     data.condition = condition;
-    var returnData;
     $http.post('/storeweather', data)
     .success(function(userData){
-      console.log("===============");
-      console.log(userData);
-      returnData = userData;
+      console.log('===============');
+      return userData;
     });
-    return returnData;
   };
   this.getWeather = function(forecastData) {
     return $http.get('/getweather');
