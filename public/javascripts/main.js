@@ -48,6 +48,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
             $scope.forecastsData = user.forecast;
             $scope.conditionsData = user.condition;
           });
+        });
       })
       .catch(function(err){
         console.log(err);
