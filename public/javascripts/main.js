@@ -29,8 +29,8 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
   DatabaseService.getWeather()
   .then(function(user){
     console.log('user', user);
-    $scope.forecastsData = user.forecast;
-    $scope.conditionsData = user.condition;
+    $scope.forecastsData = user.data.forecast;
+    $scope.conditionsData = user.data.condition;
     $scope.$evalAsync();
 
     console.log('test', $scope.forecastsData);
