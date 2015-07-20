@@ -1,3 +1,15 @@
 body {
   font: 14px Helvetica, Arial, sans-serif;
+  background-image: url('http://buythesky.com.au/App_Themes/RFDS/img/template/background-video-poster.jpg');
+  background-size: cover;
+}
+.day {
+  margin-bottom: 10px;
+  background-color: #333;
+  opacity: .8;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.heading {
+  color: #444;
 }

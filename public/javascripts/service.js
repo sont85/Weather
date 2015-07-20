@@ -9,12 +9,11 @@ app.service('WeatherService', function($http){
   };
 });
 app.service('DatabaseService', function($http, $state) {
-  this.userData = null;
   this.loginUser = function(loginUser) {
     $http.post('/login', loginUser)
     .success(function(response){
       console.log(response);
-      $state.go('search');
+      $state.go('forecast');
     })
     .catch(function(err){
       console.log(err);
@@ -29,11 +28,11 @@ app.service('DatabaseService', function($http, $state) {
       console.log(err);
     });
   };
-  this.storeForecast = function(forecast, condition) {
+  this.storeWeather = function(forecast, condition) {
     var data = {};
     data.forecast = forecast;
     data.condition = condition;
-    $http.post('/store-forecast', data)
+    $http.post('/storeweather', data)
       .success(function(userData){
         console.log(userData);
       }).catch(function(err){
@@ -41,7 +40,7 @@ app.service('DatabaseService', function($http, $state) {
         console.log(err);
       });
   };
-  this.getForecast = function(forecastData) {
-    return $http.get('get-forecast');
+  this.getWeather = function(forecastData) {
+    return $http.get('/getweather');
   };
 });

@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var User = require('../models/userSchema');
 
-router.post('/store-forecast', function(req, res){
+router.post('/storeweather', function(req, res){
   User.findOne({ email: req.user.email }, function(err, user) {
     user.forecast.push(req.body.forecast);
     user.condition.push(req.body.condition);
@@ -16,7 +16,7 @@ router.post('/store-forecast', function(req, res){
     res.json(user);
   });
 });
-router.get('/get-forecast', function(req, res) {
+router.get('/getweather', function(req, res) {
   User.findOne({ email: req.user.email }, function(err, user) {
     res.json(user);
   });

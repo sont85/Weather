@@ -1,16 +1,30 @@
-
-<h2 class="text-center">10-Day Forecast</h2>
+<form ng-submit="submitSearch()">
+  <div class='input-group'>
+    <span class='input-group-addon'>Zip Code or City, CA</span>
+    <input type='text' class='form-control' ng-model="search">
+    <span class='input-group-btn'>
+      <button type='submit' class='btn btn-default'>Go!</button>
+    </span>
+  </div>
+</form>
+<h2 class="text-center">
+  10-Day Forecast</h2>
 <div class="row">
-  <div ng-repeat="zipCode in forecastData" class="col-sm-4">
-    <div ng-repeat="day in zipCode.forecast.simpleforecast.forecastday">
-        {{love}}
-        <span class="h3">{{day.date.weekday}}</span>
-        <span class="h5">{{day.date.month}}/{{day.date.day}}/{{day.date.year}}</span>
-        <br>
-        <img ng-src="{{day.icon_url}}">
-        <span>High: {{day.high.fahrenheit}}&#x2109;</span>
-        <span>Low: {{day.low.fahrenheit}}&#x2109;</span>
-        {{forecastData.search[0].forecast}}
+  <div ng-repeat='condition in conditionsData' class="col-xs-4 text-center heading">
+    <h3>{{condition.current_observation.display_location.city}} {{condition.current_observation.display_location.state}}</h3>
+    <h5>{{condition.current_observation.temperature_string}}</h5>
+    <h5>{{condition.current_observation.observation_time}}<h5>
+  </div>
+</div>
+<div class="row">
+  <div ng-repeat="zipCode in forecastsData" class="col-xs-4 text-center">
+    <div ng-repeat="day in zipCode.forecast.simpleforecast.forecastday" class="day">
+      <span class="h3">{{day.date.weekday}}</span>
+      <span class="h5">{{day.date.month}}/{{day.date.day}}/{{day.date.year}}</span>
+      <br>
+      <img ng-src="{{day.icon_url}}">
+      <span>High: {{day.high.fahrenheit}}&#x2109;</span>
+      <span>Low: {{day.low.fahrenheit}}&#x2109;</span>
     </div>
   </div>
 </div>

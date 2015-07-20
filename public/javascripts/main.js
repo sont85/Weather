@@ -9,18 +9,21 @@ app.config(function($stateProvider, $urlRouterProvider){
       templateUrl: '../html/login.html',
       controller: 'MainCtrl'
     })
-    .state('search', {
-      url: '/search',
-      templateUrl:'../html/search.html',
-      controller: 'MainCtrl'
-    })
     .state('forecast', {
       url: '/forecast',
       templateUrl:'../html/forecast.html',
-      controller: 'ForecastCtrl'
+      controller: 'MainCtrl'
     });
 });
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
+  DatabaseService.getWeather()
+  .success(function(user){
+    $scope.forecastsData = user.forecast;
+    $scope.conditionsData = user.condition;
+    console.log(user)
+  }).catch(function(err){
+    console.log(err);
+  });
   $scope.registerUser = function() {
     console.log($scope.newUser);
     DatabaseService.registerUser($scope.newUser);
@@ -34,7 +37,8 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
     .success(function(forecast){
       WeatherService.condition($scope.search)
       .success(function(condition){
-        DatabaseService.storeForecast(forecast, condition);
+        DatabaseService.storeWeather(forecast, condition);
+        $state.reload();
       })
       .catch(function(err){
         console.log(err);
@@ -44,15 +48,4 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       console.log(err);
     });
   };
-});
-app.controller('ForecastCtrl', function($scope, WeatherService, DatabaseService, $state) {
-  // DatabaseService.getForecast()
-  // .success(function(user){
-  //   DatabaseService.userData = user;
-  //   // $scope.forecastday = user.search[0].forecast.simpleforecast.forecastday;
-  //   $scope.forecastData = user.search;
-  //   console.log(user.search[0].forecast.simpleforecast.forecastday);
-  // }).catch(function(err){
-  //   console.log(err);
-  // });
 });
