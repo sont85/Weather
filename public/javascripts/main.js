@@ -40,6 +40,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
   $scope.submitSearch = function() {
     WeatherService.forecast($scope.search)
     .success(function(forecast){
+      console.log('wooopeeeee', forecast);
       WeatherService.condition($scope.search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition)
