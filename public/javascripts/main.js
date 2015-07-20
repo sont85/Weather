@@ -43,10 +43,9 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       WeatherService.condition($scope.search)
       .success(function(condition){
         var user = DatabaseService.storeWeather(forecast, condition);
-          $scope.$evalAsync(function(){
-            $scope.forecastsData = user.forecast;
-            $scope.conditionsData = user.condition;
-          });
+        $scope.$evalAsync(function(){
+          $scope.forecastsData = user.forecast;
+          $scope.conditionsData = user.condition;
         });
       })
       .catch(function(err){
