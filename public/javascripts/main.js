@@ -43,15 +43,7 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
       WeatherService.condition($scope.search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition);
-          DatabaseService.getWeather()
-          .then(function(user){
-            $scope.$evalAsync(function(){
-              $scope.forecastsData = user.forecast;
-              $scope.conditionsData = user.condition;
-            });
-          }).catch(function(err){
-            console.log(err);
-          });
+        $state.reload();
       })
       .catch(function(err){
         console.log(err);
