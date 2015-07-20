@@ -20,39 +20,6 @@ app.config(function($stateProvider, $urlRouterProvider){
       controller: 'ForecastCtrl'
     });
 });
-app.service('WeatherService', function($http){
-  this.forecast = function(search) {
-    return $http.get('http://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/' + search + '.json');
-  };
-});
-app.service('DatabaseService', function($http, $state) {
-  this.forecastData = null;
-  this.loginUser = function(loginUser) {
-    $http.post('/login', loginUser)
-    .success(function(response){
-      console.log(response);
-      $state.go('search');
-    })
-    .catch(function(err){
-      console.log(err);
-    });
-  };
-  this.registerUser = function(newUser) {
-    $http.post('/register', newUser)
-    .success(function(data) {
-      console.log(data);
-    })
-    .catch(function(err){
-      console.log(err);
-    });
-  };
-  this.storeForecast = function(forecastData) {
-    return $http.post('/store-forecast', forecastData);
-  };
-  this.getForecast = function(forecastData) {
-    return $http.get('get-forecast');
-  };
-});
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
   $scope.registerUser = function() {
     console.log($scope.newUser);
@@ -64,27 +31,28 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
   };
   $scope.submitSearch = function() {
     WeatherService.forecast($scope.search)
-    .success(function(forecastData){
-      console.log('weatherdata:', forecastData);
-      DatabaseService.storeForecast(forecastData)
-      .success(function (response) {
-        console.log('store data:',response);
-        $state.go('forecast');
+    .success(function(forecast){
+      WeatherService.condition($scope.search)
+      .success(function(condition){
+        DatabaseService.storeForecast(forecast, condition);
       })
       .catch(function(err){
         console.log(err);
       });
     })
-    .error(function(err){
+    .catch(function(err){
       console.log(err);
     });
   };
 });
 app.controller('ForecastCtrl', function($scope, WeatherService, DatabaseService, $state) {
-  DatabaseService.getForecast()
-  .success(function(data){
-    DatabaseService.forecastData = data;
-  }).catch(function(err){
-    console.log(err);
-  });
+  // DatabaseService.getForecast()
+  // .success(function(user){
+  //   DatabaseService.userData = user;
+  //   // $scope.forecastday = user.search[0].forecast.simpleforecast.forecastday;
+  //   $scope.forecastData = user.search;
+  //   console.log(user.search[0].forecast.simpleforecast.forecastday);
+  // }).catch(function(err){
+  //   console.log(err);
+  // });
 });

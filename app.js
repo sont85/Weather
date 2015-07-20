@@ -11,7 +11,6 @@ var app = express();
 
 mongoose.connect('mongodb://localhost/weather');
 
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
