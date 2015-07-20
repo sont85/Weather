@@ -28,12 +28,13 @@ app.controller('LoginCtrl', function($scope, DatabaseService, $state) {
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
   DatabaseService.getWeather()
   .then(function(user){
-    $scope.$evalAsync(function(){
+    console.log('user', user);
+    $scope.$apply(function(){
       $scope.forecastsData = user.forecast;
       $scope.conditionsData = user.condition;
     });
 
-    console.log(user);
+    console.log('test', $scope.forecastsData);
   }).catch(function(err){
     console.log(err);
   });
