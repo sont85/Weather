@@ -1,11 +1,14 @@
 'use strict';
 var app = angular.module('Weather');
-app.service('WeatherService', function($http){
+app.constant('Url', {
+  wunderground: 'http://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/'
+});
+app.service('WeatherService', function($http, Url){
   this.forecast = function(search) {
-    return $http.get('http://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/' + search + '.json');
+    return $http.get(Url.wunderground + search + '.json');
   };
   this.condition = function(search) {
-    return $http.get('http://api.wunderground.com/api/5ac2a3bc4dece267/conditions/q/' + search + '.json');
+    return $http.get(Url.wunderground + search + '.json');
   };
 });
 app.service('DatabaseService', function($http, $state) {

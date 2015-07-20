@@ -7,7 +7,7 @@ app.config(function($stateProvider, $urlRouterProvider){
     .state('login', {
       url: '/',
       templateUrl: '../html/login.html',
-      controller: 'MainCtrl'
+      controller: 'LoginCtrl'
     })
     .state('forecast', {
       url: '/forecast',
@@ -15,15 +15,7 @@ app.config(function($stateProvider, $urlRouterProvider){
       controller: 'MainCtrl'
     });
 });
-app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
-  DatabaseService.getWeather()
-  .success(function(user){
-    $scope.forecastsData = user.forecast;
-    $scope.conditionsData = user.condition;
-    console.log(user)
-  }).catch(function(err){
-    console.log(err);
-  });
+app.controller('LoginCtrl', function($scope, DatabaseService, $state) {
   $scope.registerUser = function() {
     console.log($scope.newUser);
     DatabaseService.registerUser($scope.newUser);
@@ -32,6 +24,15 @@ app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $st
   $scope.loginUser = function() {
     DatabaseService.loginUser($scope.login);
   };
+});
+app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
+  DatabaseService.getWeather()
+  .success(function(user){
+    $scope.forecastsData = user.forecast;
+    $scope.conditionsData = user.condition;
+  }).catch(function(err){
+    console.log(err);
+  });
   $scope.submitSearch = function() {
     WeatherService.forecast($scope.search)
     .success(function(forecast){
