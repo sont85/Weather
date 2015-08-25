@@ -2,7 +2,7 @@
 module.exports = function(app, passport) {
 
   app.get('/', function(req, res, next) {
-    res.render('index', { title: 'Weather App' });
+    res.render('index');
   });
 
   app.post('/login', passport.authenticate('local-login'), function(req, res){

@@ -9,8 +9,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 var app = express();
 
-// mongoose.connect('mongodb://localhost/weather');
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/weather');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
