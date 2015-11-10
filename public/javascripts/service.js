@@ -4,32 +4,41 @@ app.constant('Url', {
   forecast: 'https://api.wunderground.com/api/5ac2a3bc4dece267/forecast10day/q/',
   condition: 'https://api.wunderground.com/api/5ac2a3bc4dece267/conditions/q/'
 });
-app.service('WeatherService', function($http, Url, DatabaseService){
+app.service('WeatherService', function($http, Url, DatabaseService, $q){
   var self = this;
-  this.forecast = function($scope) {
-    $http.get(Url.forecast + $scope.search + '.json')
+  this.forecast = function(search) {
+    var deferred = $q.defer();
+    $http.get(Url.forecast + search + '.json')
     .success(function(forecast){
       if (forecast.response.error) {
         return;
       }
-      self.condition($scope.search)
+      self.condition(search)
       .success(function(condition){
         DatabaseService.storeWeather(forecast, condition)
         .then(function(){
-          DatabaseService.getWeather($scope);
+          DatabaseService.getWeather()
+          .then(function(user){
+            deferred.resolve(user);
+          }, function() {
+            deferred.reject('error');
+          })
         });
       }).catch(function(err){
+        deferred.reject('error');
         console.log(err);
       });
     }).catch(function(err){
+      deferred.reject('error');
       console.log(err);
     });
+    return deferred.promise;
   };
   this.condition = function(search) {
     return $http.get(Url.condition + search + '.json');
   };
 });
-app.service('DatabaseService', function($http, $state) {
+app.service('DatabaseService', function($http, $state, $q) {
   var self = this;
   this.loginUser = function(loginUser) {
     $http.post('/login', loginUser)
@@ -56,13 +65,15 @@ app.service('DatabaseService', function($http, $state) {
     data.condition = condition;
     return $http.post('/storeweather', data);
   };
-  this.getWeather = function($scope) {
+  this.getWeather = function() {
+    var deferred = $q.defer();
     $http.get('/getweather')
     .success(function(user){
-      $scope.forecastsData = user.forecast;
-      $scope.conditionsData = user.condition;
+      deferred.resolve(user);
     }).catch(function(err){
+      deferred.reject('there was an error');
       $state.go('login');
     });
+    return deferred.promise;
   };
 });

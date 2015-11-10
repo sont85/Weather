@@ -26,9 +26,22 @@ app.controller('LoginCtrl', function($scope, DatabaseService, $state) {
   };
 });
 app.controller('MainCtrl', function($scope, WeatherService, DatabaseService, $state) {
-  DatabaseService.getWeather($scope);
-
   $scope.submitSearch = function() {
-    WeatherService.forecast($scope);
+    WeatherService.forecast($scope.search)
+    .then(function(user) {
+      $scope.forecastsData = user.forecast;
+      $scope.conditionsData = user.condition;
+    }, function() {
+      alert('err');
+    })
   };
+  DatabaseService.getWeather()
+    .then(function(user) {
+      console.log('success')
+      $scope.forecastsData = user.forecast;
+      $scope.conditionsData = user.condition;
+    }, function(err) {
+      alert(err);
+    });
+
 });
